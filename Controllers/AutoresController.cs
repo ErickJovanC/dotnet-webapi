@@ -30,5 +30,42 @@ namespace WebApiAutores.Controllers
 
             return Ok();
         }
+
+        [HttpPut("{id:int}")] // api/autores/1
+        public async Task<ActionResult> Put(Autor autor, int id)
+        {
+            // En caso de inconsitencia del Id
+            if (autor.Id != id )
+            {
+                return BadRequest("El id del autor no coincide con el id de la URL");
+            }
+
+            // Valida la existencia del elemento en la DB
+            var existe = await context.Autores.AnyAsync(x => x.Id == id);
+
+            if (!existe) {
+                return NotFound();
+            }
+
+            context.Update(autor); // Establece el tipo acción
+            await context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpDelete("{id:int}")] //api/autores/2
+        public async Task<ActionResult> Delete(int id)
+        {
+            var existe = await context.Autores.AnyAsync(x => x.Id == id);
+
+            if (!existe) {
+                return NotFound();
+            }
+
+            //Crear una instancia y la carga para enviarla a Entity
+            context.Remove(new Autor() {Id = id});
+            await context.SaveChangesAsync();
+
+            return Ok();
+        }
     }
 }
