@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebApiAutores.Entidades;
 
 namespace WebApiAutores.Controllers
 {
@@ -18,7 +19,7 @@ namespace WebApiAutores.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Autor>>> Get()
         {
-            return await context.Autores.ToListAsync();
+            return await context.Autores.Include(XmlConfigurationExtensions => XmlConfigurationExtensions.Libros).ToListAsync();
         }
 
         // Enviar Registros a la DB
