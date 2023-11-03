@@ -12,8 +12,8 @@ using WebApiAutores;
 namespace WebApiAutores.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231031162242_SistemaUsuarios")]
-    partial class SistemaUsuarios
+    [Migration("20231103203554_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
